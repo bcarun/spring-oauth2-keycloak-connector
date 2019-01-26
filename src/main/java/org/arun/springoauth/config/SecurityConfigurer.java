@@ -1,7 +1,6 @@
 package org.arun.springoauth.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
@@ -10,8 +9,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
-import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
@@ -26,11 +23,15 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Import({SecurityProperties.class})
 public class SecurityConfigurer extends ResourceServerConfigurerAdapter {
 
-  @Autowired
   private ResourceServerProperties resourceServerProperties;
 
-  @Autowired
   private SecurityProperties securityProperties;
+
+  /* Using spring constructor injection */
+  public SecurityConfigurer(ResourceServerProperties resourceServerProperties, SecurityProperties securityProperties) {
+    this.resourceServerProperties = resourceServerProperties;
+    this.securityProperties = securityProperties;
+  }
 
   @Override
   public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -69,15 +70,4 @@ public class SecurityConfigurer extends ResourceServerConfigurerAdapter {
   public JwtAccessTokenCustomizer jwtAccessTokenCustomizer(ObjectMapper mapper) {
     return new JwtAccessTokenCustomizer(mapper);
   }
-
-  @Bean
-  public OAuth2RestTemplate oauth2RestTemplate(OAuth2ProtectedResourceDetails details) {
-    OAuth2RestTemplate oAuth2RestTemplate = new OAuth2RestTemplate(details);
-
-    //Prepare by getting access token once
-    oAuth2RestTemplate.getAccessToken();
-    return oAuth2RestTemplate;
-  }
-
-
 }
