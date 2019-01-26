@@ -11,6 +11,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 
+/**
+ * OAuth2RestTemplateConfigurer is to create a bean of type {@link OAuth2RestTemplate}.
+ * <p>
+ *   This configurer is run only when following properties are set in application.properties.
+ * </p>
+ *
+ *   <code>rest.security.enabled=true</code>
+ *   <code>security.oauth2.client.grant-type=client_credentials</code>
+ *
+ */
 @Configuration
 @Conditional(value = {ServiceAccountEnabled.class})
 public class OAuth2RestTemplateConfigurer {

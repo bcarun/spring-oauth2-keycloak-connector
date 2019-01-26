@@ -15,6 +15,14 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+/**
+ * SecurityConfigurer is to configure ResourceServer and HTTP Security.
+ * <p>
+ *   Please make sure you check HTTP Security configuration and change is as per your needs.
+ * </p>
+ *
+ * Note: Use {@link SecurityProperties} to configure required CORs configuration and enable or disable security of application.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableResourceServer
@@ -27,7 +35,7 @@ public class SecurityConfigurer extends ResourceServerConfigurerAdapter {
 
   private SecurityProperties securityProperties;
 
-  /* Using spring constructor injection */
+  /* Using spring constructor injection, @Autowired is implicit */
   public SecurityConfigurer(ResourceServerProperties resourceServerProperties, SecurityProperties securityProperties) {
     this.resourceServerProperties = resourceServerProperties;
     this.securityProperties = securityProperties;

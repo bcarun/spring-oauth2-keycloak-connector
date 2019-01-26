@@ -19,6 +19,13 @@ import org.springframework.security.oauth2.provider.OAuth2Request;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
+/**
+ * JwtAccessTokenCustomizer is to read roles and user_name in access token.
+ * <p>
+ * This class assumes, that you have define a Protocol Mapper in Keycloack to map user property 'username' to a claim named 'user_name' in access
+ * token
+ * </p>
+ */
 public class JwtAccessTokenCustomizer extends DefaultAccessTokenConverter implements JwtAccessTokenConverterConfigurer {
 
   private static final Logger LOG = LoggerFactory.getLogger(JwtAccessTokenCustomizer.class);
@@ -29,7 +36,7 @@ public class JwtAccessTokenCustomizer extends DefaultAccessTokenConverter implem
 
   private ObjectMapper mapper;
 
-  @Autowired
+  /* Using spring constructor injection, @Autowired is implicit */
   public JwtAccessTokenCustomizer(ObjectMapper mapper) {
     this.mapper = mapper;
     LOG.info("Initialized {}", JwtAccessTokenCustomizer.class.getSimpleName());

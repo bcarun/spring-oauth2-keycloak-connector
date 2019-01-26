@@ -19,6 +19,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+/**
+ * SecurityContextUtils is used to get username and roles to set created by, last updated by fields.
+ */
 @Component
 public class SecurityContextUtils {
 
