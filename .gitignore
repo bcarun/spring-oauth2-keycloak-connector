@@ -47,3 +47,6 @@ hs_err_pid*
 /dist/
 /nbdist/
 /.nb-gradle/
+
+.vscode
+.DS_Store
